@@ -1,1 +1,0 @@
-print("Welcome to Python,", "Welcome to Computer Science,", "Programming is fun.")
