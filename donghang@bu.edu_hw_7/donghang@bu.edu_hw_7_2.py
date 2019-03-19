@@ -20,10 +20,10 @@ def main():
             line, cursor = cmd_i(x_str, line, cursor)
             my_print(x_str, line,  cursor)
         elif command == "cmd_j":
-            line = cmd_j(x_str, line, cursor)
+            line = cmd_j(x_str)
             my_print(x_str, line, cursor)
         elif command == "cmd_k":
-            line = cmd_k(x_str, line, cursor)
+            line = cmd_k(x_str, line)
             my_print(x_str, line, cursor)
         elif command == "cmd_X":
             x_str, cursor = cmd_X(x_str, line, cursor)
@@ -35,7 +35,7 @@ def main():
             x_str, cursor = cmd_dd(x_str, line, cursor)
             my_print(x_str, line, cursor)
         elif command == "cmd_ddp":
-            x_str = cmd_ddp(x_str, line, cursor)
+            x_str = cmd_ddp(x_str, line)
             my_print(x_str, line, cursor)
         elif command == "cmd_n":
             s_string = input("Please enter a string:")
@@ -83,7 +83,7 @@ def cmd_i(x, line, cur):
 
 
 # move cursor vertically up one line
-def cmd_j(x, line, cur):
+def cmd_j(line):
     if line == 0:
         print("This is the first line!")
         return line
@@ -92,7 +92,7 @@ def cmd_j(x, line, cur):
 
 
 # move cursor vertically down one line
-def cmd_k(x, line, cur):
+def cmd_k(x, line,):
 
     if line == len(x)-1:
         print("This is the last line!")
@@ -127,7 +127,7 @@ def cmd_dd(x, line, cur):
 
 
 # transpose two adjacent lines
-def cmd_ddp(x, line, cur):
+def cmd_ddp(x, line):
     if line == len(x)-1:
         print("This is the last line!")
     else:
