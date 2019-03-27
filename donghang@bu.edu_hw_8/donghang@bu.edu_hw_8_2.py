@@ -21,10 +21,10 @@ def main():
             line, cursor = cmd_i(x_str, line, cursor)
             my_print(x_str, line,  cursor)
         elif command == "cmd_j":
-            line = cmd_j(x_str)
+            line, cursor = cmd_j(x_str, line, cursor)
             my_print(x_str, line, cursor)
         elif command == "cmd_k":
-            line = cmd_k(x_str, line)
+            line, cursor = cmd_k(x_str, line, cursor)
             my_print(x_str, line, cursor)
         elif command == "cmd_X":
             x_str, cursor = cmd_X(x_str, line, cursor)
@@ -102,22 +102,26 @@ def cmd_i(x, line, cur):
 
 
 # move cursor vertically up one line
-def cmd_j(line):
+def cmd_j(x, line, cur):
     if line == 0:
         print("This is the first line!")
-        return line
+        return line, cur
     else:
-        return line-1
+        if cur > len(x[line-1])-1:
+            cur = len(x[line-1]) - 1
+        return line-1, cur
 
 
 # move cursor vertically down one line
-def cmd_k(x, line):
+def cmd_k(x, line, cur):
 
     if line == len(x)-1:
         print("This is the last line!")
-        return line
+        return line, cur
     else:
-        return line+1
+        if cur > len(x[line+1])-1:
+            return line+1, len(x[line+1])-1
+        return line+1, cur
 
 
 # delete the character to the left of the cursor
@@ -141,22 +145,26 @@ def cmd_D(x, line, cur):
 
 # delete current line and move cursor to the beginning of next line
 def cmd_dd(x, line, cur):
-    left_list = x[:line]
-    right_list = x[line+1:]
-    temp_len = len(x[line][:cur])
-    return left_list + right_list, cur-temp_len
+    # on the last line
+    if line == 3:
+        return x, cur
+    else:
+        left_list = x[:line]
+        right_list = x[line+1:]
+        temp_len = len(x[line][:cur])
+        return left_list + right_list, cur-temp_len
 
 
 # transpose two adjacent lines
 def cmd_ddp(x, line):
     if line == len(x)-1:
         print("This is the last line!")
+        return x
     else:
-        left_list = x[:line]
-        current = x[line+1]
-        next = x[line]
-        right_list = x[line+2:]
-        return left_list + [current] + [next] + right_list
+        temp = x[line]
+        x[line] = x[line+1]
+        x[line+1] = temp
+        return x
 
 
 # search for next occurrence of a string

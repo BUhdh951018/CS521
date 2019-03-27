@@ -98,10 +98,14 @@ def cmd_j(x, cur):
         left_lines = x[:cur - temp_left]
         # calculate the length of the above line
         above_len = left_lines[::-1][1:].find("\n")
+
         # if the above line is the first line
         if above_len == -1:
             above_len = len(left_lines)
             return cur - above_len
+        # if cur to the left of this line is longer than the above line
+        elif temp_left > above_len:
+            return cur - temp_left - 1
         return cur - above_len - 1
 
 
@@ -118,9 +122,14 @@ def cmd_k(x, cur):
         print("This is the last line!")
         return cur
     else:
+        temp = x[cur + temp_right + 1:].find("\n")
         # if the cursor is on the first line
         if temp_left == -1:
             temp_left = len(re_left)
+        # if cur to the left of this line is longer than the below line
+        elif temp_left > temp:
+            return cur + temp + temp_right + 1
+
         return cur + temp_right + temp_left + 1
 
 
@@ -143,13 +152,17 @@ def cmd_dd(x, cur):
         left = x[:cur]
         re_left = left[::-1]
         temp_left = re_left.find("\n")
+        # cur on the first line
+        if temp_left == -1:
+            return x[cur + temp_right + 1:], 0
         return x[:cur - 1 - temp_left] + x[cur + temp_right:], cur - temp_left
     else:
-        temp_right = len(x[cur:])
+        '''temp_right = len(x[cur:])
         left = x[:cur]
         re_left = left[::-1]
         temp_left = re_left.find("\n")
-        return x[:cur - temp_left] + x[cur + temp_right:], cur - temp_left
+        return x[:cur - temp_left] + x[cur + temp_right:], cur - temp_left'''
+        return x, cur
 
 
 # transpose two adjacent lines

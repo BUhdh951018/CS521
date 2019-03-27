@@ -136,8 +136,8 @@ def cmd_j(s, line, cur):
     if line == s:
         return line, cur
     else:
-        if len(line[data][:cur]) > len(line[p_ptr][data]):
-            cur = len(line[p_ptr][data])
+        if len(line[data][:cur]) > len(line[p_ptr][data])-1:
+            cur = len(line[p_ptr][data])-1
         line = line[p_ptr]
         return line, cur
 
@@ -147,7 +147,7 @@ def cmd_k(e, line, cur):
     if line == e:
         return line, cur
     else:
-        if len(line[data][:cur]) > len(line[n_ptr][data]):
+        if len(line[data][:cur]) > len(line[n_ptr][data])-1:
             cur = len(line[n_ptr][data])-1
         line = line[n_ptr]
         return line, cur
@@ -193,13 +193,10 @@ def cmd_ddp(s, e, line):
         return s, e, line
     else:
         if line == s:
-            temp = line[data]
             line[p_ptr] = line[n_ptr]
             line[n_ptr] = line[n_ptr][n_ptr]
-            line[data] = line[n_ptr][data]
             line[n_ptr][p_ptr] = None
             line[n_ptr][n_ptr] = line
-            line[n_ptr][data] = temp
             line = line[n_ptr]
             s = line
             return s, e, line
@@ -263,7 +260,7 @@ def cmd_t(s, line, cur):
     if line == s and cur == 0:
         return line
     else:
-        if cur == len(line[data]):
+        if cur == len(line[data])-1:
             return line
         else:
             line[data] = line[data][:cur-1] + line[data][cur+1] + line[data][cur-1] + line[data][cur+1:]
