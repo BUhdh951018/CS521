@@ -42,7 +42,7 @@ def main():
             start, line, cursor = cmd_dd(start, end, line, cursor)
             my_print(start, line, cursor)
         elif command == "cmd_ddp":
-            start, line, end = cmd_ddp(start, end, line)
+            line = cmd_ddp(start, end, line)
             my_print(start, line, cursor)
         elif command == "cmd_n":
             n_string = input("Please enter a string:")
@@ -190,26 +190,27 @@ def cmd_dd(s, e, line, cur):
 # transpose two adjacent lines
 def cmd_ddp(s, e, line):
     if line == e:
-        return s, e, line
+        return line
     else:
-        if line == s:
+        '''if line == s:
             line[p_ptr] = line[n_ptr]
-            line[n_ptr] = line[n_ptr][n_ptr]
-            line[n_ptr][p_ptr] = None
-            line[n_ptr][n_ptr] = line
+            line[n_ptr] = line[1][n_ptr]
+            line[1][p_ptr] = None
+            line[1][n_ptr] = line
             line = line[n_ptr]
-            s = line
-            return s, e, line
+            return s, line
         else:
-            temp = line[data]
             line[n_ptr][p_ptr] = line[p_ptr]
             line[p_ptr] = line[n_ptr]
             line[n_ptr] = line[n_ptr][n_ptr]
             line[n_ptr][n_ptr] = line
-            line[data] = line[n_ptr][data]
-            line[n_ptr][data] = temp
             line = line[n_ptr]
-            return s, e, line
+            return s, line'''
+        temp = line[data]
+        line[data] = line[n_ptr][data]
+        line[n_ptr][data] = temp
+        line = line[n_ptr]
+        return line
 
 
 # search for next occurrence of a string
